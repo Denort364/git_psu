@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Калькулятор</title>
+    <meta charset="utf-8">
+</head>
+<body>
+<style>
+	body {
+		background-color: #FFF;
+		user-select: none;
+
+		
+	}
+
+	.container {
+
+		display: grid;
+		
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+		grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+
+		background-color: #E4E4E4;
+		grid-gap: 3px;
+		max-width: 351px;
+		font-family: Roboto;
+
+
+
+	}
+
+
+	
+
+	.item {
+		display: flex;
+		background-color: #F3F3F3;
+		color: #000;
+		font-size: 28px;
+		cursor: pointer;
+		width: 84px;
+		height: 54px;
+		border: none;
+		outline: none;
+		font-weight: bold;
+		align-items: center;
+		justify-content: center;
+
+	}
+	.item1 {
+		display: flex;
+		background-color: #FFF;
+		color: #000;
+		font-size: 28px;
+		cursor: pointer;
+		width: 84px;
+		height: 54px;
+		border: none;
+		outline: none;
+		font-weight: bold;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.int {
+		background-color: #E4E4E4;
+		display: grid;
+		width: 100%;
+		grid-column: 1/-1;
+		text-align: right;
+
+	}
+
+	input {
+		width: 100%;
+		background-color: #E4E4E4
+		height: 10px;
+		border: none;
+		font-size: 28px;
+		text-align: right;
+		outline: none;
+
+
+	}
+
+	form {
+		display: grid;
+	}
+	.int1 {
+		background-color: #E4E4E4;
+		align-items: stretch;
+		justify-content: stretch;
+		height: 20px;
+		font-size: 14px;
+	}
+	.int2 {
+		background-color: #E4E4E4;
+		align-items: stretch;
+		justify-content: stretch;
+		height: 30px;
+	}
+
+</style>
+<div class="container">
+	<div class="item int">
+		<div class= "inputmin"><form name="form"><input class="int1"type="text" id="input" readonly></form></div>
+		<div class= "input"><form name="form"><input class="int2", type="text" id="input2" readonly></form></div>
+	</div>
+	<div class="item" onclick="insert('CE')">CE</div>
+	<div class="item" onclick="insert('C')">C</div>
+	<div class="item" onclick="insert('D')">D</div>
+	<div class="item" onclick="insert('/')">/</div>
+	<div class="item1" onclick="insert('7')">7</div>
+	<div class="item1" onclick="insert('8')">8</div>
+	<div class="item1" onclick="insert('9')">9</div>
+	<div class="item" onclick="insert('*')">*</div>
+	<div class="item1" onclick="insert('4')">4</div>
+	<div class="item1" onclick="insert('5')">5</div>
+	<div class="item1" onclick="insert('6')">6</div>
+	<div class="item" onclick="insert('-')">-</div>
+	<div class="item1" onclick="insert('1')">1</div>
+	<div class="item1" onclick="insert('2')">2</div>
+	<div class="item1" onclick="insert('3')">3</div>
+	<div class="item" onclick="insert('+')">+</div>
+	<div class="item" onclick="insert('±')">±</div>
+	<div class="item1" onclick="insert('0')">0</div>
+	<div class="item" onclick="insert('.')">.</div>
+	<div class="item" onclick="insert('=')">=</div>
+	<script>
+		var el = document.getElementById('input2');
+		var er = document.getElementById('input');
+		var answer = 0, sign = 0; num2 = 0;
+		function insert(num) {
+			if ((num == 'CE') ){
+				el.value = '';
+			} else if (num == 'C') {
+				el.value = '';
+				er.value = '';
+			} else if (num == 'D') {
+				el.value = el.value.substring(0, el.value.length - 1)
+			}else if ((num == '+') || (num == '-') || (num == '*') || (num == '/')) {
+				if (sign == '+') {
+					answer = answer + (Number.parseInt(el.value));
+				}else if(sign == '-'){
+					answer = answer - (Number.parseInt(el.value));
+				}else if(sign == '*'){
+					answer = answer * (Number.parseInt(el.value));
+				}else if(sign == '/'){
+					answer = answer / (Number.parseInt(el.value));
+				}else {
+					er.value ='';
+					answer = Number.parseInt(el.value);
+				}
+				if (el.value < 0) {
+					el.value = '(' + el.value + ')';
+				}
+				if ((num == '*') || (num == '/')) {
+					er.value = '(' + er.value + ' ' + el.value + ') ' + num;
+					el.value = '';
+				} else {
+					er.value = er.value + ' ' + el.value + ' ' + num;
+					el.value = '';
+				}
+				sign = num;
+			} else if (num == '±') {
+				el.value = el.value * (-1);
+			} else if (num == '=') {
+				if (sign == '+') {
+					answer = answer + (Number.parseInt(el.value));
+				}else if(sign == '-'){
+					answer = answer - (Number.parseInt(el.value));
+				}else if(sign == '*'){
+					answer = answer * (Number.parseInt(el.value));
+				}else if(sign == '/'){
+					answer = answer / (Number.parseInt(el.value));
+				}else {
+					answer = Number.parseInt(el.value);
+				}
+				if (el.value < 0) {
+					el.value = '(' + el.value + ')'
+				}
+				er.value = er.value + ' ' + el.value + ' ' + num;
+				el.value = answer;
+				answer = 0;
+				sign = 0;
+			}else {
+				if (el.value == '0') {
+					el.value == num;
+				}
+				el.value = el.value + num;
+			}
+		}
+	</script>
+</body>
+</body>
+</html>
